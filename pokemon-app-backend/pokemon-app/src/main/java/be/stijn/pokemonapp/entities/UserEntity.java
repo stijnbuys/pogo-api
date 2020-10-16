@@ -5,6 +5,8 @@ import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 
@@ -23,10 +25,14 @@ public class UserEntity implements Serializable {
     @GeneratedValue
     private long id;
     @NotNull
+    @Column(unique = true)
+    @Size(min = 5, max = 20, message = "Username must be between 10 and 200 characters")
     private String username;
     @NotNull
     private String password;
     @NotNull
+    @Email(message = "invalid emailadress")
+    @Column(unique = true)
     private String email;
     private String pogoName;
 
