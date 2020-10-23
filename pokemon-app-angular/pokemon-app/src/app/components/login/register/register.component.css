@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dosis&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@400;600&display=swap');
+
+.container {
+ padding-top: 50px;
+ font-family: 'Dosis', 'Roboto', sans-serif;
+}
+
+.login-box {
+    margin: auto;
+    height: 300px;
+    width: 300px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 10px;
+    padding-bottom: 30px;
+    background-color: lightgray;
+    border-radius: 20px;
+    padding-bottom: 350px;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+}
+
+.login-input {
+    float: right;
+    height: 45px;
+    width: 270px;
+    font-size: large;
+    border-radius: 10px;
+
+}
+
+.login-input-box {
+    width: 308px;
+    height: 50px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+}
+
+.login-input-icon {
+    float: left;
+    width: 30px;
+    height: 50px;
+    background-color: lightgrey;
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+    text-align: center;
+}
+
+.login-input-icon-img {
+    height: 20px;
+    margin-top: 13px;
+}
+
+.login-input-icon-img-l {
+    height: 28px;
+    margin-top: 13px;
+}
+
+input {
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom-style: hidden;
+  }
+  
+input:focus {
+    outline: none;
+  }
+
+.login-box-logo {
+    margin: auto;
+    height: 100px;
+    width: 200px;
+    margin-top: -30px;
+}
+
+.login-box-title {
+    text-align: center;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.login-submit {
+    cursor: pointer;
+    margin: auto;
+    background-color: orangered;
+    height: 35px;
+    width: 150px;
+    border-radius: 8px;
+    border: 1px solid black;
+    text-align: center;
+    padding-top: 10px;
+    font-size: 1.3em;
+    color: black;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+}
+
+.login-box-bottom {
+    width: 300px;
+    height: 50px;
+    margin: auto;
+    padding-top: 10px;
+    text-align: center;
+}
+
+a {
+    color: red;
+}
+
+
+.register-text{
+    font-size: 1.3em;
+
+}
