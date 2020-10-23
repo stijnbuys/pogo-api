@@ -1,0 +1,16 @@
+TODO
+==========
+
+BACKEND
+-----------
+
+# ADD SWAGGER
+
+# ADD TYPES TO POKEMONS
+
+# ADD MOVES TO POKEMONS
+
+
+FRONTEND
+------------
+
