@@ -58,7 +58,6 @@ export class PokemonTileComponent implements OnInit {
       form = "31";
     }
 
-
     if (this.pokemon.pokedex.toString().length == 1) {
       this.imgUrl = "../../../assets/pokemon/pokemon_icon_00" + this.pokemon.pokedex + "_" + form + ".png";
     }
@@ -71,7 +70,6 @@ export class PokemonTileComponent implements OnInit {
       this.imgUrl = "../../../assets/pokemon/pokemon_icon_" + this.pokemon.pokedex + "_" + form + ".png";
     }
 
-    console.warn(this.imgUrl)
   }
 
 }

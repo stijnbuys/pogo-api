@@ -8,8 +8,12 @@ import { RegisterComponent } from './components/login/register/register.componen
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: '**', redirectTo: 'login' }
+  {path: 'home' , component: HomeComponent,
+    loadChildren: () => import('./modules/home/home.module')
+      .then(m => m.HomeModule),
+      canActivate: [AuthGuard]
+  },
+ { path: '**', redirectTo: 'home' }
 ];
 
 @NgModule({

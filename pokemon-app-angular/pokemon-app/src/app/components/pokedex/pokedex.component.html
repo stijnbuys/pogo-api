@@ -1,44 +1,45 @@
 
-<div class="header">
-    <div class="gen-button">KANTO</div>
-    <div class="gen-button">JOHTO</div>
-    <div class="gen-button">HOENN</div>
-    <div class="gen-button">SINNOH</div>
-    <div class="gen-button">UNOVA</div>
-    <div class="gen-button">GALAR</div>
-</div>
-
-
+<!--<div class="header">
+    
+</div>-->
 
 <div class="container">
 
-    <div class="top-filter">
-        <input [(ngModel)]="name" (ngModelChange)="filterByName($event)"/>
-    </div>
+   <!-- <div class="top-filter">
+   </div -->
 
     <div class="container-left">
-        <div>Types</div>
+        <div class="gen-button">KANTO</div>
+        <div class="gen-button">JOHTO</div>
+        <div class="gen-button">HOENN</div>
+        <div class="gen-button">SINNOH</div>
+        <div class="gen-button">UNOVA</div>
+        <div class="gen-button">GALAR</div>
+
+        <div class="filter-input">
+            <input [(ngModel)]="name" (ngModelChange)="filter()" placeholder="search..." />
+        </div>
+
         <!-- TODO MAKE DYNAMIC -->
-        <img src="../../assets/types/Normal.png" class="filter-type">
-        <img src="../../assets/types/Grass.png" class="filter-type">
-        <img src="../../assets/types/Fire.png" class="filter-type">
-        <img src="../../assets/types/Water.png" class="filter-type">
-        <img src="../../assets/types/Electric.png" class="filter-type">
-        <img src="../../assets/types/Bug.png" class="filter-type">
-        <img src="../../assets/types/Poison.png" class="filter-type">
-        <img src="../../assets/types/Ground.png" class="filter-type">
-        <img src="../../assets/types/Rock.png" class="filter-type">
-        <img src="../../assets/types/Steel.png" class="filter-type">
-        <img src="../../assets/types/Ice.png" class="filter-type">
-        <img src="../../assets/types/Psychic.png" class="filter-type">
-        <img src="../../assets/types/Fighting.png" class="filter-type">
-        <img src="../../assets/types/Fairy.png" class="filter-type">
-        <img src="../../assets/types/Dark.png" class="filter-type">
-        <img src="../../assets/types/Flying.png" class="filter-type">
-        <img src="../../assets/types/Ghost.png" class="filter-type">
-        <img src="../../assets/types/Dragon.png" class="filter-type">
-
-
+        <img src="../../assets/types/Normal.png" (click)="addTypeToFilter('Normal')" [ngClass]="{'off': !this.types.includes('Normal')}" class="filter-type">
+        <img src="../../assets/types/Grass.png" (click)="addTypeToFilter('Grass')" [ngClass]="{'off': !this.types.includes('Grass')}" class="filter-type">
+        <img src="../../assets/types/Fire.png" (click)="addTypeToFilter('Fire')" [ngClass]="{'off': !this.types.includes('Fire')}" class="filter-type">
+        <img src="../../assets/types/Water.png" (click)="addTypeToFilter('Water')" [ngClass]="{'off': !this.types.includes('Water')}" class="filter-type">
+        <img src="../../assets/types/Electric.png" (click)="addTypeToFilter('Electric')" [ngClass]="{'off': !this.types.includes('Electric')}" class="filter-type">
+        <img src="../../assets/types/Bug.png" (click)="addTypeToFilter('Bug')" [ngClass]="{'off': !this.types.includes('Bug')}" class="filter-type">
+        <img src="../../assets/types/Poison.png" (click)="addTypeToFilter('Poison')" [ngClass]="{'off': !this.types.includes('Poison')}" class="filter-type">
+        <img src="../../assets/types/Ground.png" (click)="addTypeToFilter('Ground')" [ngClass]="{'off': !this.types.includes('Ground')}" class="filter-type">
+        <img src="../../assets/types/Rock.png" (click)="addTypeToFilter('Rock')" [ngClass]="{'off': !this.types.includes('Rock')}" class="filter-type">
+        <img src="../../assets/types/Steel.png" (click)="addTypeToFilter('Steel')" [ngClass]="{'off': !this.types.includes('Steel')}" class="filter-type">
+        <img src="../../assets/types/Ice.png" (click)="addTypeToFilter('Ice')" [ngClass]="{'off': !this.types.includes('Ice')}" class="filter-type">
+        <img src="../../assets/types/Psychic.png" (click)="addTypeToFilter('Psychic')" [ngClass]="{'off': !this.types.includes('Psychic')}" class="filter-type">
+        <img src="../../assets/types/Fighting.png" (click)="addTypeToFilter('Fighting')" [ngClass]="{'off': !this.types.includes('Fighting')}" class="filter-type">
+        <img src="../../assets/types/Fairy.png" (click)="addTypeToFilter('Fairy')" [ngClass]="{'off': !this.types.includes('Fairy')}" class="filter-type">
+        <img src="../../assets/types/Dark.png" (click)="addTypeToFilter('Dark')" [ngClass]="{'off': !this.types.includes('Dark')}" class="filter-type">
+        <img src="../../assets/types/Flying.png" (click)="addTypeToFilter('Flying')" [ngClass]="{'off': !this.types.includes('Flying')}" class="filter-type" class="filter-type">
+        <img src="../../assets/types/Ghost.png" (click)="addTypeToFilter('Ghost')" [ngClass]="{'off': !this.types.includes('Ghost')}" class="filter-type">
+        <img src="../../assets/types/Dragon.png" (click)="addTypeToFilter('Dragon')" [ngClass]="{'off': !this.types.includes('Dragon')}"  class="filter-type">
+  
     </div>
 
     <div class="container-right">

@@ -1,19 +1,17 @@
 
 <div class="header">
 
-    <div class="header-link">
-        <a>Pokedex</a>
-    </div>
-    <div class="header-link">
-        <a>Raids</a>
-    </div>
-    <div class="header-link">
-        <a>Events</a>
-    </div>
+    <a class="header-link" [routerLink]="['/home']">Home</a>
+    <a class="header-link" [routerLink]="['/home/pokedex']">Pokedex</a>
+    <a class="header-link" [routerLink]="['/home/raids']">Raids</a>
+    <a class="header-link" [routerLink]="['/home/events']">Events</a>
 
     <!--<button (click)="logout()">LOGOUT</button>-->
 </div>
 
+<div>HALLO</div>
+
 <div class="container">
-    <app-pokedex></app-pokedex>
+    <router-outlet></router-outlet>
+    <!--<app-pokedex></app-pokedex>-->
 </div>

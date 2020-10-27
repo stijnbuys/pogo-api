@@ -18,7 +18,6 @@ export class RegisterComponent implements OnInit {
 
   submit()
   {
-    console.warn(this.registerRequest);
     this.loginService.register(this.registerRequest);
   }
 

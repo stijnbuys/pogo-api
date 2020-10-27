@@ -1,8 +1,8 @@
 .header {
     width: 100%;
-    padding: 10px 0px 10px 0px;
+    padding: 20px 0px 10px 0px;
     text-align: center;
-    margin-top: 10px;
+    margin-top: -30px;
     background-color: rgba(247, 160, 79, 0.6);
     box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75),
     inset 0px  11px 8px -10px #CCC,
@@ -20,13 +20,34 @@ text-align: center;
     width: 25px;
 }
 
+.off {
+    filter: opacity(30%);
+}
+
 .filter-type:hover {
     cursor: pointer;
 
 }
+
+
+.filter-input {
+    width: 140px;
+    margin: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    border-radius: 5px;
+}
+
+input {
+    height: 30px;
+    width: 130px;
+    border: none;
+}
+
 .container {
     overflow: hidden;
-    padding-top: 50px;
+    padding-top: 0px;
     max-width: 840px;
     margin: auto;
 }
@@ -34,13 +55,10 @@ text-align: center;
 .container-left {
     position: fixed;
     left: 50px;
+    top: 160px;
     width: 200px;
     height: 500px;
     text-align: center;
-    border-radius: 10px;
-    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75),
-    inset 0px  11px 8px -10px #CCC,
-    inset 0px -11px 8px -10px #CCC;
 }
 
 .container-right {

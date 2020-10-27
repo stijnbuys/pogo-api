@@ -9,7 +9,7 @@ import { PokemonService } from 'src/app/services/pokemon.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private router: Router, private pokemonService : PokemonService) { }
+  constructor(private router: Router) { }
 
 
   ngOnInit(): void {
