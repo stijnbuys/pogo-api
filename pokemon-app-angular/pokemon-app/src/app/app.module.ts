@@ -11,13 +11,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './auth/auth.service';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { JwtHelper } from 'angular2-jwt';
+import { PokemonTileComponent } from './components/pokedex/pokemon-tile/pokemon-tile.component';
+import { PokedexComponent } from './components/pokedex/pokedex.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    HomeComponent
+    HomeComponent,
+    PokemonTileComponent,
+    PokedexComponent
   ],
   imports: [
     BrowserModule,

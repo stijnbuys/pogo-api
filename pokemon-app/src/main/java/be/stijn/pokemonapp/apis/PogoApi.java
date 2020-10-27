@@ -1,7 +1,6 @@
 package be.stijn.pokemonapp.apis;
 
 import be.stijn.pokemonapp.entities.AlolanPokemon;
-import be.stijn.pokemonapp.entities.BaseStats;
 import be.stijn.pokemonapp.entities.GalarianPokemon;
 import be.stijn.pokemonapp.entities.Pokemon;
 import be.stijn.pokemonapp.pojo.pogoApi.*;
@@ -52,7 +51,7 @@ public class PogoApi {
 
             for ( FormResponse f: forms) {
 
-                if ( !f.getForm().equals("Alola") && !f.getForm().equals("Galarian") && !f.getForm().equals("Galarian_standard") && !f.getForm().equals("Galarian_zen")) {
+                if ( !f.getForm().equals("Alola") && !f.getForm().equals("Galarian") && !f.getForm().equals("Galarian_standard") && !f.getForm().equals("Galarian_zen") && !f.getForm().equals("Shadow") && !f.getForm().equals("Purified")) {
                     if (p.getId() == f.getId()) {
 
                         Pokemon pokemon = pokemonResponseToPokemon(p);
@@ -117,6 +116,25 @@ public class PogoApi {
         return pokemonListWithForms;
     }
 
+    public List<Pokemon> geShadowPokemonList() {
+
+        final String URI = "/api/v1/shadow_pokemon.json";
+
+        RestTemplate rest = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<ShadowPokemonResponse> response = rest.exchange(URL + URI, HttpMethod.GET, entity, ShadowPokemonResponse.class);
+
+        List<Pokemon> pokemonList = new ArrayList<>();
+        for (PokemonResponse p: response.getBody().getPokemonList()) {
+            Pokemon pokemon = pokemonResponseToPokemon(p);
+            pokemonList.add(pokemon);
+        }
+
+        return pokemonList;
+    }
+
     public List<FastMoveResponse> getFastMoves() {
 
         final String URI = "/api/v1/fast_moves.json";
@@ -176,6 +194,44 @@ public class PogoApi {
 
 
         return baseStatsResponseList;
+    }
+
+    public List<TypesResponse> getPokemonTypes() {
+
+        final String URI = "/api/v1/pokemon_types.json";
+
+        RestTemplate rest = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<TypesResponse[]> response = rest.exchange(URL + URI, HttpMethod.GET, entity, TypesResponse[].class);
+
+        List<TypesResponse> typesResponseList = new ArrayList<>(Arrays.asList(response.getBody()));
+
+        return typesResponseList;
+    }
+
+
+    public List<GenResponse> getPokemonGenerations() {
+
+        final String URI = "/api/v1/pokemon_generations.json";
+
+        RestTemplate rest = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+
+        ResponseEntity<GenListResponse> response = rest.exchange(URL + URI, HttpMethod.GET, entity, GenListResponse.class);
+
+        List<GenResponse> genResponseList = new ArrayList<>();
+        for (GenResponse[] genArray : response.getBody().getGens()) {
+            for (GenResponse g: genArray) {
+                genResponseList.add(g);
+            }
+        }
+
+
+        return genResponseList;
     }
 
     private Pokemon pokemonResponseToPokemon(PokemonResponse p) {

@@ -10,6 +10,9 @@ public interface PokemonService {
     List<Pokemon> updateReleasedPokemons();
     List<AlolanPokemon> updateAlolanPokemons();
     List<GalarianPokemon> updateGalarianPokemons();
+    void updateShadowPokemons();
+    void updateGens();
+    void updateTypes();
     void updateBaseStats();
 
 }

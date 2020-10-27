@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AlolanPokemon extends Pokemon{
+public class AlolanPokemon extends Pokemon {
 
 
     @Override

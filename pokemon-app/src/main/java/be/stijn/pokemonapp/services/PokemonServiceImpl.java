@@ -3,7 +3,9 @@ package be.stijn.pokemonapp.services;
 import be.stijn.pokemonapp.apis.PogoApi;
 import be.stijn.pokemonapp.entities.*;
 import be.stijn.pokemonapp.pojo.pogoApi.BaseStatsResponse;
+import be.stijn.pokemonapp.pojo.pogoApi.GenResponse;
 import be.stijn.pokemonapp.pojo.pogoApi.PokemonResponse;
+import be.stijn.pokemonapp.pojo.pogoApi.TypesResponse;
 import be.stijn.pokemonapp.repositories.AlolanPokemonRepository;
 import be.stijn.pokemonapp.repositories.GalarianPokemonRepository;
 import be.stijn.pokemonapp.repositories.PokemonRepository;
@@ -30,6 +32,8 @@ public class PokemonServiceImpl implements PokemonService {
     PogoApi pogoApi;
 
     private List<BaseStatsResponse> baseStatsList;
+    private List<TypesResponse> typesList;
+    private List<GenResponse> genList;
 
     @Override
     public List<Pokemon> updateReleasedPokemons() {
@@ -91,6 +95,214 @@ public class PokemonServiceImpl implements PokemonService {
         return galarianPokemonRepository.saveAll(newPokemonList);
     }
 
+    @Override
+    public void updateShadowPokemons() {
+
+        List<Pokemon> shadowPokemonList = pogoApi.geShadowPokemonList();
+        List<Pokemon> pokemonList = pokemonRepository.findAll();
+
+        for (Pokemon p : pokemonList) {
+            for (Pokemon s : shadowPokemonList) {
+
+                if (!p.isShadow() && p.getForm().equals("Normal")) {
+                    p.setShadow(true);
+                    pokemonRepository.save(p);
+
+                    log.info("[SP*] ADDED SHADOW FORM TO " + p.toString());
+                }
+            }
+        }
+    }
+
+    @Override
+    public void updateGens() {
+        genList = pogoApi.getPokemonGenerations();
+
+        updateGensOfPokemons();
+        updateGensOfAlolanPokemons();
+        updateGensOfGalarianPokemons();
+    }
+
+    private void updateGensOfPokemons() {
+
+        List<GenResponse> normalGenList = new ArrayList<>(genList);
+
+        List<Pokemon> pokemonList = pokemonRepository.findAll();
+
+        for (Pokemon p : pokemonList) {
+
+            for (GenResponse g : normalGenList) {
+
+                if (g.getId() == p.getPokedex()) {
+
+                    if (p.getGen() == null) {
+
+                        p.setGen(g.getGen());
+                        pokemonRepository.save(p);
+                    }
+                }
+            }
+        }
+    }
+
+    private void updateGensOfAlolanPokemons() {
+
+        List<GenResponse> alolanGenList = new ArrayList<>(genList);
+
+        List<AlolanPokemon> pokemonList = alolanPokemonRepository.findAll();
+
+        for (AlolanPokemon p : pokemonList) {
+
+            for (GenResponse g : alolanGenList) {
+
+                if (g.getId() == p.getPokedex()) {
+
+                    if (p.getGen() == null) {
+
+                        p.setGen(g.getGen());
+                        alolanPokemonRepository.save(p);
+                    }
+                }
+            }
+        }
+    }
+
+    private void updateGensOfGalarianPokemons() {
+
+        List<GenResponse> galarianGenList = new ArrayList<>(genList);
+
+        List<GalarianPokemon> pokemonList = galarianPokemonRepository.findAll();
+
+        for (GalarianPokemon p : pokemonList) {
+
+            for (GenResponse g : galarianGenList) {
+
+                if (g.getId() == p.getPokedex()) {
+
+                    if (p.getGen() == null) {
+
+                        p.setGen(g.getGen());
+                        galarianPokemonRepository.save(p);
+                    }
+                }
+            }
+        }
+    }
+
+
+    @Override
+    public void updateTypes() {
+
+        typesList = pogoApi.getPokemonTypes();
+
+        updateTypesOfPokemons();
+        updateBaseStatsOfAlolanPokemons();
+        updateBaseStatsOfGalarianPokemons();
+
+    }
+
+    private void updateTypesOfPokemons() {
+
+        List<TypesResponse> normalTypesList = new ArrayList<>(typesList);
+
+        //TODO FIX this
+        normalTypesList.removeIf(b -> (!b.getForm().equals("Normal") && !b.getForm().equals("Altered") && !b.getForm().equals("Origin") && !b.getForm().equals("A")) && !b.getForm().equals("Attack") && !b.getForm().equals("Black") && !b.getForm().equals("Blue_striped") && !b.getForm().equals("Burn") && !b.getForm().equals("Chill") && !b.getForm().equals("Copy_2019") && !b.getForm().equals("Costume_2020") && !b.getForm().equals("Defense") && !b.getForm().equals("Douse") && !b.getForm().equals("East_sea") && !b.getForm().equals("Fall_2019") && !b.getForm().equals("Fan") && !b.getForm().equals("Frost") && !b.getForm().equals("Heat") && !b.getForm().equals("Incarnate") && !b.getForm().equals("Mow") && !b.getForm().equals("Overcast") && !b.getForm().equals("Plant") && !b.getForm().equals("Costume2020") && !b.getForm().equals("Rainy") && !b.getForm().equals("Red_striped") && !b.getForm().equals("Sandy") && !b.getForm().equals("Autumn") && !b.getForm().equals("Shock") && !b.getForm().equals("Snowy") && !b.getForm().equals("Speed") && !b.getForm().equals("Spring") && !b.getForm().equals("Standard") && !b.getForm().equals("Summer") && !b.getForm().equals("Sunny") && !b.getForm().equals("Therian") && !b.getForm().equals("Trash") && !b.getForm().equals("Vs_2019") && !b.getForm().equals("Wash") && !b.getForm().equals("West_sea") && !b.getForm().equals("White") && !b.getForm().equals("Winter") && !b.getForm().equals("Zen"));
+
+        List<Pokemon> pokemonList = pokemonRepository.findAll();
+
+        for (Pokemon p : pokemonList) {
+
+            for (TypesResponse t : normalTypesList) {
+
+                if (t.getId() == p.getPokedex() && t.getForm().equals(p.getForm())) {
+
+                    if (p.getTypes() == null) {
+
+                        p.setTypes(t.getTypes());
+                        pokemonRepository.save(p);
+                        log.info("[BS*] UPDATED TYPES OF " + p.toString());
+                    } else {
+                        if (!p.getTypes().equals(t.getTypes())) {
+                            p.setTypes(t.getTypes());
+                            pokemonRepository.save(p);
+                            log.info("[BS*] UPDATED TYPES OF " + p.toString());
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void updateTypesOfAlolanPokemons() {
+
+        List<TypesResponse> alolanTypesList = new ArrayList<>(typesList);
+
+        //TODO FIX this
+        alolanTypesList.removeIf(b -> (!b.getForm().equals("Alola")));
+
+        List<AlolanPokemon> pokemonList = alolanPokemonRepository.findAll();
+
+        for (AlolanPokemon p : pokemonList) {
+
+            for (TypesResponse t : alolanTypesList) {
+
+                if (t.getId() == p.getPokedex() && t.getForm().equals(p.getForm())) {
+
+                    if (t.getId() == p.getPokedex() && t.getForm().equals(p.getForm())) {
+
+                        if (p.getTypes() == null) {
+
+                            p.setTypes(t.getTypes());
+                            alolanPokemonRepository.save(p);
+                            log.info("[BS*] UPDATED TYPES OF " + p.toString());
+                        } else {
+                            if (!p.getTypes().equals(t.getTypes())) {
+                                p.setTypes(t.getTypes());
+                                alolanPokemonRepository.save(p);
+                                log.info("[BS*] UPDATED TYPES OF " + p.toString());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void updateTypesOfGalarianPokemons() {
+
+        List<TypesResponse> galarianTypesList = new ArrayList<>(typesList);
+
+        //TODO FIX this
+        galarianTypesList.removeIf(b -> (!b.getForm().equals("Galarian") && !b.getForm().equals("Galarian_standard") && !b.getForm().equals("Galarian_zen")));
+
+        List<GalarianPokemon> pokemonList = galarianPokemonRepository.findAll();
+
+        for (GalarianPokemon p : pokemonList) {
+
+            for (TypesResponse t :  galarianTypesList) {
+
+                if (t.getId() == p.getPokedex() && t.getForm().equals(p.getForm())) {
+
+                    if (t.getId() == p.getPokedex() && t.getForm().equals(p.getForm())) {
+
+                        if (p.getTypes() == null) {
+
+                            p.setTypes(t.getTypes());
+                            galarianPokemonRepository.save(p);
+                            log.info("[BS*] UPDATED TYPES OF " + p.toString());
+                        } else {
+                            if (!p.getTypes().equals(t.getTypes())) {
+                                p.setTypes(t.getTypes());
+                                galarianPokemonRepository.save(p);
+                                log.info("[BS*] UPDATED TYPES OF " + p.toString());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 
     @Override
     public void updateBaseStats() {
@@ -109,7 +321,7 @@ public class PokemonServiceImpl implements PokemonService {
         List<BaseStatsResponse> normalBaseStatsList = new ArrayList<>(baseStatsList);
 
         //TODO FIX this
-        normalBaseStatsList.removeIf(b -> (!b.getForm().equals("Normal") && !b.getForm().equals("Altered") && !b.getForm().equals("Origin") && !b.getForm().equals("Purified") && !b.getForm().equals("Shadow") && !b.getForm().equals("A")) && !b.getForm().equals("Attack") && !b.getForm().equals("Black") && !b.getForm().equals("Blue_striped") && !b.getForm().equals("Burn") && !b.getForm().equals("Chill") && !b.getForm().equals("Copy_2019") && !b.getForm().equals("Costume_2020") && !b.getForm().equals("Defense") && !b.getForm().equals("Douse") && !b.getForm().equals("East_sea") && !b.getForm().equals("Fall_2019") && !b.getForm().equals("Fan") && !b.getForm().equals("Frost") && !b.getForm().equals("Heat") && !b.getForm().equals("Incarnate") && !b.getForm().equals("Mow") && !b.getForm().equals("Overcast") && !b.getForm().equals("Plant") && !b.getForm().equals("Costume2020") && !b.getForm().equals("Rainy") && !b.getForm().equals("Red_striped") && !b.getForm().equals("Sandy") && !b.getForm().equals("Autumn") && !b.getForm().equals("Shock") && !b.getForm().equals("Snowy") && !b.getForm().equals("Speed") && !b.getForm().equals("Spring") && !b.getForm().equals("Standard") && !b.getForm().equals("Summer") && !b.getForm().equals("Sunny") && !b.getForm().equals("Therian") && !b.getForm().equals("Trash") && !b.getForm().equals("Vs_2019") && !b.getForm().equals("Wash") && !b.getForm().equals("West_sea") && !b.getForm().equals("White") && !b.getForm().equals("Winter") && !b.getForm().equals("Zen"));
+        normalBaseStatsList.removeIf(b -> (!b.getForm().equals("Normal") && !b.getForm().equals("Altered") && !b.getForm().equals("Origin") && !b.getForm().equals("A")) && !b.getForm().equals("Attack") && !b.getForm().equals("Black") && !b.getForm().equals("Blue_striped") && !b.getForm().equals("Burn") && !b.getForm().equals("Chill") && !b.getForm().equals("Copy_2019") && !b.getForm().equals("Costume_2020") && !b.getForm().equals("Defense") && !b.getForm().equals("Douse") && !b.getForm().equals("East_sea") && !b.getForm().equals("Fall_2019") && !b.getForm().equals("Fan") && !b.getForm().equals("Frost") && !b.getForm().equals("Heat") && !b.getForm().equals("Incarnate") && !b.getForm().equals("Mow") && !b.getForm().equals("Overcast") && !b.getForm().equals("Plant") && !b.getForm().equals("Costume2020") && !b.getForm().equals("Rainy") && !b.getForm().equals("Red_striped") && !b.getForm().equals("Sandy") && !b.getForm().equals("Autumn") && !b.getForm().equals("Shock") && !b.getForm().equals("Snowy") && !b.getForm().equals("Speed") && !b.getForm().equals("Spring") && !b.getForm().equals("Standard") && !b.getForm().equals("Summer") && !b.getForm().equals("Sunny") && !b.getForm().equals("Therian") && !b.getForm().equals("Trash") && !b.getForm().equals("Vs_2019") && !b.getForm().equals("Wash") && !b.getForm().equals("West_sea") && !b.getForm().equals("White") && !b.getForm().equals("Winter") && !b.getForm().equals("Zen"));
 
         List<Pokemon> pokemonList = pokemonRepository.findAll();
 

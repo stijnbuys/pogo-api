@@ -1,0 +1,67 @@
+.header {
+    width: 100%;
+    padding: 10px 0px 10px 0px;
+    text-align: center;
+    margin-top: 10px;
+    background-color: rgba(247, 160, 79, 0.6);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75),
+    inset 0px  11px 8px -10px #CCC,
+    inset 0px -11px 8px -10px #CCC;
+}
+
+.top-filter {
+text-align: center;
+ overflow: hidden;
+}
+
+.filter-type {
+    height: 25px;
+    padding: 5px;
+    width: 25px;
+}
+
+.filter-type:hover {
+    cursor: pointer;
+
+}
+.container {
+    overflow: hidden;
+    padding-top: 50px;
+    max-width: 840px;
+    margin: auto;
+}
+
+.container-left {
+    position: fixed;
+    left: 50px;
+    width: 200px;
+    height: 500px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75),
+    inset 0px  11px 8px -10px #CCC,
+    inset 0px -11px 8px -10px #CCC;
+}
+
+.container-right {
+    overflow: hidden;
+    margin: auto;
+}
+
+.gen-title {
+    overflow: hidden;
+    margin: 20px 20px 10px 20px;
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.3);
+}
+
+.gen-button {
+    display: inline-block;
+    width: 100px;
+}
+
+.gen-button:hover {
+    cursor: pointer;
+    font-weight: 600;
+}

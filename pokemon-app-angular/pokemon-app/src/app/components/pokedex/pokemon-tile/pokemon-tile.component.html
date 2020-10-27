@@ -1,0 +1,11 @@
+<div class="pokemon_box">
+    <div class="pokedex">#{{pokemon.pokedex}}</div>
+    <img [src]="imgUrl" class="pokemon-img" />
+
+    <div class="title">
+        {{pokemon.name}}
+    </div>
+    <img *ngFor="let type of pokemon.types"  [src]="'../../../assets/types/' + type + '.png'"  class="type-img"/>
+
+
+</div>

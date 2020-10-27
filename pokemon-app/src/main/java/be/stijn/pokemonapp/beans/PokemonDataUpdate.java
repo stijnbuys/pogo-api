@@ -72,6 +72,26 @@ public class PokemonDataUpdate {
                 hashService.updateHash(hash);
             }
         }
+        for (PogoApiHash hash: hashes) {
+            if (hash.getApiFilename().equals("pokemon_types.json")) {
+                pokemonService.updateTypes();
+                hashService.updateHash(hash);
+            }
+        }
+
+        for (PogoApiHash hash: hashes) {
+            if (hash.getApiFilename().equals("pokemon_generations.json")) {
+                pokemonService.updateGens();
+                hashService.updateHash(hash);
+            }
+        }
+
+        for (PogoApiHash hash: hashes) {
+            if (hash.getApiFilename().equals("shadow_pokemon.json")) {
+                pokemonService.updateShadowPokemons();
+                hashService.updateHash(hash);
+            }
+        }
 
         log.info("[FINISHED WITH UPDATING FROM POGO API]");
     }
