@@ -13,7 +13,7 @@ const routes: Routes = [
       .then(m => m.HomeModule),
       canActivate: [AuthGuard]
   },
- { path: '**', redirectTo: 'home' }
+ { path: '**', redirectTo: 'login' }
 ];
 
 @NgModule({

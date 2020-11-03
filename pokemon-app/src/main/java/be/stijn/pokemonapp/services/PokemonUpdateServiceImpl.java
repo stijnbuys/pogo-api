@@ -2,10 +2,7 @@ package be.stijn.pokemonapp.services;
 
 import be.stijn.pokemonapp.apis.PogoApi;
 import be.stijn.pokemonapp.entities.*;
-import be.stijn.pokemonapp.pojo.pogoApi.BaseStatsResponse;
-import be.stijn.pokemonapp.pojo.pogoApi.GenResponse;
-import be.stijn.pokemonapp.pojo.pogoApi.PokemonResponse;
-import be.stijn.pokemonapp.pojo.pogoApi.TypesResponse;
+import be.stijn.pokemonapp.pojo.pogoApi.*;
 import be.stijn.pokemonapp.repositories.AlolanPokemonRepository;
 import be.stijn.pokemonapp.repositories.GalarianPokemonRepository;
 import be.stijn.pokemonapp.repositories.PokemonRepository;
@@ -17,7 +14,7 @@ import java.util.*;
 
 @Service
 @Slf4j
-public class PokemonServiceImpl implements PokemonService {
+public class PokemonUpdateServiceImpl implements PokemonUpdateService {
 
     @Autowired
     PokemonRepository pokemonRepository;
@@ -96,19 +93,46 @@ public class PokemonServiceImpl implements PokemonService {
     }
 
     @Override
-    public void updateShadowPokemons() {
+    public void updateShinys() {
+        updateShinyPokemons();
+    }
 
-        List<Pokemon> shadowPokemonList = pogoApi.geShadowPokemonList();
+    private void updateShinyPokemons() {
+        List<ShinyResponse> shinyList = pogoApi.getShinyPokemonList();
         List<Pokemon> pokemonList = pokemonRepository.findAll();
 
         for (Pokemon p : pokemonList) {
-            for (Pokemon s : shadowPokemonList) {
 
-                if (!p.isShadow() && p.getForm().equals("Normal")) {
-                    p.setShadow(true);
-                    pokemonRepository.save(p);
+            if (!p.isShiny()) {
+                for (ShinyResponse s : shinyList) {
 
-                    log.info("[SP*] ADDED SHADOW FORM TO " + p.toString());
+                    if (s.getId() == p.getPokedex()) {
+
+                        p.setShiny(true);
+                        pokemonRepository.save(p);
+                        log.info("[SH*] ADDED SHINY FORM TO " + p.toString());
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void updateShadowPokemons() {
+
+        List<Pokemon> shadowPokemonList = pogoApi.geShadowPokemonList();
+        List<Pokemon> pokemonList = pokemonRepository.findAllByFormOrderByPokedex("Normal");
+
+        for (Pokemon p : pokemonList) {
+            if (!p.isShadow()) {
+                for (Pokemon s : shadowPokemonList) {
+
+                    if (s.getPokedex() == p.getPokedex()) {
+                        p.setShadow(true);
+                        pokemonRepository.save(p);
+
+                        log.info("[SP*] ADDED SHADOW FORM TO " + p.toString());
+                    }
                 }
             }
         }

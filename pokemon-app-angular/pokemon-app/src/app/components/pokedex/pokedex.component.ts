@@ -52,7 +52,14 @@ export class PokedexComponent implements OnInit {
         this.types.push(type);
       }
       else {
-        this.types = this.types.filter(t => t !== type)
+        if (this.types.length != 1) {
+
+          this.types = this.types.filter(t => t !== type)
+        }
+        else {
+
+          this.types =["Normal", "Grass", "Fire", "Water", "Electric", "Bug", "Poison", "Ground", "Rock", "Steel", "Ice", "Psychic", "Fighting", "Fairy", "Dark", "Flying", "Ghost", "Dragon"];
+        }
       }
     }
     else {

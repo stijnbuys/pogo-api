@@ -4,11 +4,13 @@ import be.stijn.pokemonapp.entities.AlolanPokemon;
 import be.stijn.pokemonapp.entities.GalarianPokemon;
 import be.stijn.pokemonapp.entities.Pokemon;
 import be.stijn.pokemonapp.pojo.pogoApi.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -16,11 +18,12 @@ import java.util.Arrays;
 import java.util.List;
 
 @Component
+@Slf4j
 public class PogoApi {
 
     private final String URL = "https://pogoapi.net";
 
-    public List<PogoApiHashResponse> getHashList() {
+    public List<PogoApiHashResponse> getHashList() throws Exception {
 
         final String URI = "/api/v1/api_hashes.json";
 
@@ -28,9 +31,15 @@ public class PogoApi {
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<?> entity = new HttpEntity<>(headers);
 
-        ResponseEntity<PogoApiHashListResponse> response = rest.exchange(URL + URI, HttpMethod.GET, entity, PogoApiHashListResponse.class);
+        try {
+            ResponseEntity<PogoApiHashListResponse> response = rest.exchange(URL + URI, HttpMethod.GET, entity, PogoApiHashListResponse.class);
+            return response.getBody().getHashList();
 
-        return response.getBody().getHashList();
+        } catch (RestClientException e) {
+            log.error("[ERROR] Something went wrong while getting hashes from pogoapi.net");
+            List<PogoApiHashResponse> emptyHashList = new ArrayList<>();
+            return emptyHashList;
+        }
     }
 
     public List<Pokemon> getReleasedPokemonList() {
@@ -133,6 +142,19 @@ public class PogoApi {
         }
 
         return pokemonList;
+    }
+
+    public List<ShinyResponse> getShinyPokemonList() {
+
+        final String URI = "/api/v1/shiny_pokemon.json";
+
+        RestTemplate rest = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<ShinyListResponse> response = rest.exchange(URL + URI, HttpMethod.GET, entity, ShinyListResponse.class);
+
+        return  response.getBody().getShinyList();
     }
 
     public List<FastMoveResponse> getFastMoves() {

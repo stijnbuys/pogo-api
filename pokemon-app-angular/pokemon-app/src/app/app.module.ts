@@ -15,6 +15,7 @@ import { PokemonTileComponent } from './components/pokedex/pokemon-tile/pokemon-
 import { PokedexComponent } from './components/pokedex/pokedex.component';
 import { HomeModule } from './modules/home/home.module';
 import { StartComponent } from './components/start/start/start.component';
+import { ValidatorComponent } from './components/login/validator/validator.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { StartComponent } from './components/start/start/start.component';
     LoginComponent,
     RegisterComponent,
     StartComponent,
+    ValidatorComponent,
   ],
   imports: [
     BrowserModule,

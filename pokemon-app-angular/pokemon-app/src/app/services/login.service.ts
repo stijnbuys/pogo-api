@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { LoginRequest } from '../models/loginrequest';
 import { LoginResponse } from '../models/loginresponse';
@@ -13,18 +14,10 @@ export class LoginService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  login(loginRequest: LoginRequest) {
+  login(loginRequest: LoginRequest): Observable<any> {
 
-    this.http.post<LoginResponse>(environment.API_URL + "auth/login", loginRequest)
-    .subscribe({
-        next: data => {
-          localStorage.setItem('token', data.token);
-          this.router.navigate(['home']);
-        },
-        error: error => {
-            console.log('Log in failed!' );
-        }
-      })
+    return this.http.post<LoginResponse>(environment.API_URL + "auth/login", loginRequest);
+   
   }
 
   register(registerRequest: RegisterRequest)

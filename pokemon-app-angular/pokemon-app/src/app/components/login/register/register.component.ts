@@ -9,7 +9,9 @@ import { LoginService } from 'src/app/services/login.service';
 })
 export class RegisterComponent implements OnInit {
 
-  registerRequest: RegisterRequest = { "username": "", "email": "", "password": "", "pogoName": ""}
+  registerRequest: RegisterRequest = { "username": "", "email": "", "password": "", "pogoName": ""};
+
+  public validatorMessage: string = "";
   
   constructor(private loginService: LoginService) {}
 
@@ -18,7 +20,18 @@ export class RegisterComponent implements OnInit {
 
   submit()
   {
+    this.validatorMessage = "";
+    if (this.registerRequest.username.length <  4)
+    {
+
+      this.validatorMessage = "Please fill in your username & password"
+
+    }
+
+
+    if (this.validatorMessage == "" ) {
     this.loginService.register(this.registerRequest);
+    }
   }
 
 }

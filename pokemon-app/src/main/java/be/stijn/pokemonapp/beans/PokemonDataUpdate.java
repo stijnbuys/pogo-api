@@ -1,11 +1,9 @@
 package be.stijn.pokemonapp.beans;
 
-import be.stijn.pokemonapp.apis.PogoApi;
-import be.stijn.pokemonapp.entities.AlolanPokemon;
 import be.stijn.pokemonapp.entities.PogoApiHash;
 import be.stijn.pokemonapp.services.HashService;
 import be.stijn.pokemonapp.services.PokemonMoveService;
-import be.stijn.pokemonapp.services.PokemonService;
+import be.stijn.pokemonapp.services.PokemonUpdateService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,34 +18,33 @@ public class PokemonDataUpdate {
     HashService hashService;
 
     @Autowired
-    PokemonService pokemonService;
+    PokemonUpdateService pokemonUpdateService;
 
     @Autowired
     PokemonMoveService pokemonMoveService;
 
-    public void updatePokemonData()
-    {
+    public void updatePokemonData() throws Exception {
         log.info("[START UPDATING FROM POGO API]");
 
         List<PogoApiHash> hashes = hashService.getNewHashes();
 
         for (PogoApiHash hash: hashes) {
             if (hash.getApiFilename().equals("released_pokemon.json")) {
-                pokemonService.updateReleasedPokemons();
+                pokemonUpdateService.updateReleasedPokemons();
                 hashService.updateHash(hash);
             }
         }
 
         for (PogoApiHash hash: hashes) {
             if (hash.getApiFilename().equals("alolan_pokemon.json")) {
-                pokemonService.updateAlolanPokemons();
+                pokemonUpdateService.updateAlolanPokemons();
                 hashService.updateHash(hash);
             }
         }
 
         for (PogoApiHash hash: hashes) {
             if (hash.getApiFilename().equals("galarian_pokemon.json")) {
-                pokemonService.updateGalarianPokemons();
+                pokemonUpdateService.updateGalarianPokemons();
                 hashService.updateHash(hash);
             }
         }
@@ -68,27 +65,34 @@ public class PokemonDataUpdate {
 
         for (PogoApiHash hash: hashes) {
             if (hash.getApiFilename().equals("pokemon_stats.json")) {
-                pokemonService.updateBaseStats();
+                pokemonUpdateService.updateBaseStats();
                 hashService.updateHash(hash);
             }
         }
         for (PogoApiHash hash: hashes) {
             if (hash.getApiFilename().equals("pokemon_types.json")) {
-                pokemonService.updateTypes();
+                pokemonUpdateService.updateTypes();
                 hashService.updateHash(hash);
             }
         }
 
         for (PogoApiHash hash: hashes) {
             if (hash.getApiFilename().equals("pokemon_generations.json")) {
-                pokemonService.updateGens();
+                pokemonUpdateService.updateGens();
                 hashService.updateHash(hash);
             }
         }
 
         for (PogoApiHash hash: hashes) {
             if (hash.getApiFilename().equals("shadow_pokemon.json")) {
-                pokemonService.updateShadowPokemons();
+                pokemonUpdateService.updateShadowPokemons();
+                hashService.updateHash(hash);
+            }
+        }
+
+        for (PogoApiHash hash: hashes) {
+            if (hash.getApiFilename().equals("shiny_pokemon.json")) {
+                pokemonUpdateService.updateShinys();
                 hashService.updateHash(hash);
             }
         }

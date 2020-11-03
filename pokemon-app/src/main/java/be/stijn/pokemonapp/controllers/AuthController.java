@@ -3,6 +3,7 @@ package be.stijn.pokemonapp.controllers;
 import be.stijn.pokemonapp.entities.UserEntity;
 import be.stijn.pokemonapp.pojo.LoginRequest;
 import be.stijn.pokemonapp.pojo.LoginResponse;
+import be.stijn.pokemonapp.pojo.RegisterRequest;
 import be.stijn.pokemonapp.security.jwt.JwtTokenUtil;
 import be.stijn.pokemonapp.services.UserService;
 import lombok.AllArgsConstructor;
@@ -13,7 +14,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -41,6 +41,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<LoginResponse> register(@RequestBody UserEntity user) {
 
+        //UserEntity user = registerRequest.mapToUser();
         userService.registerUser(user);
 
         //LoginRequest loginUser = new LoginRequest(user.getUsername(),user.getPassword());

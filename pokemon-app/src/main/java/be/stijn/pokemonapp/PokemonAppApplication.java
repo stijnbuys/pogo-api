@@ -16,13 +16,12 @@ public class PokemonAppApplication {
 	@Autowired
 	private PokemonDataUpdate pokemonDataUpdate;
 
-
 	public static void main(String[] args) {
 		SpringApplication.run(PokemonAppApplication.class, args);
 	}
 
 	@Scheduled(fixedDelay = 30000)
-	public void scheduleFixedDelayTask() {
+	public void scheduleFixedDelayTask() throws Exception {
 
 		pokemonDataUpdate.updatePokemonData();
 	}

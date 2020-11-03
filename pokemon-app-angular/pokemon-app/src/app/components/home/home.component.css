@@ -10,9 +10,10 @@
 
 .header-link {
     display: inline-block;
-    font-size: 2em;
+    font-size: 1.5em;
+    font-weight: 700;
     padding-left: 50px;
-    padding-top: 25px;
+    padding-top: 35px;
 }
 
 .header-link:hover {

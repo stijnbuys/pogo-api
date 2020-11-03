@@ -1,9 +1,8 @@
 package be.stijn.pokemonapp.controllers;
 
-import be.stijn.pokemonapp.apis.PogoApi;
 import be.stijn.pokemonapp.entities.Pokemon;
 import be.stijn.pokemonapp.repositories.PokemonRepository;
-import be.stijn.pokemonapp.services.PokemonService;
+import be.stijn.pokemonapp.services.PokemonUpdateService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,7 @@ import java.util.List;
 public class RaidController {
 
     @Autowired
-    PokemonService pokemonService;
+    PokemonUpdateService pokemonUpdateService;
 
     @Autowired
     PokemonRepository pokemonRepository;

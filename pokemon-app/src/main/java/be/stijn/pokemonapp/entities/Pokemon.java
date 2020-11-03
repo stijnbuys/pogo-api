@@ -37,6 +37,8 @@ public class Pokemon implements Serializable {
 
     private boolean shadow;
 
+    private boolean shiny;
+
     @Override
     public boolean equals(Object o) {
         if (o == this) {

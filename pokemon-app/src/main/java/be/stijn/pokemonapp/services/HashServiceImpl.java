@@ -24,7 +24,7 @@ public class HashServiceImpl implements HashService {
     PogoApi pogoApi;
 
     @Override
-    public List<PogoApiHash> getNewHashes() {
+    public List<PogoApiHash> getNewHashes() throws Exception {
         List<PogoApiHashResponse> updatedHashList = pogoApi.getHashList();
         List<PogoApiHash> currentHashList = pogoApiHashRepository.findAll();
         List<PogoApiHash> newHashList = new ArrayList<>();
@@ -63,7 +63,7 @@ public class HashServiceImpl implements HashService {
     private List<PogoApiHashResponse> filterHashList(List<PogoApiHashResponse> hashlist) {
 
         //TODO REMOVE FILTER OR REFACTOR
-        hashlist.removeIf(h -> !h.getApiFilename().equals("released_pokemon.json") && !h.getApiFilename().equals("fast_moves.json") && !h.getApiFilename().equals("charged_moves.json") && !h.getApiFilename().equals("alolan_pokemon.json") && !h.getApiFilename().equals("galarian_pokemon.json") && !h.getApiFilename().equals("pokemon_stats.json") && !h.getApiFilename().equals("pokemon_types.json") && !h.getApiFilename().equals("pokemon_generations.json") && !h.getApiFilename().equals("shadow_pokemon.json") );
+        hashlist.removeIf(h -> !h.getApiFilename().equals("released_pokemon.json") && !h.getApiFilename().equals("fast_moves.json") && !h.getApiFilename().equals("charged_moves.json") && !h.getApiFilename().equals("alolan_pokemon.json") && !h.getApiFilename().equals("galarian_pokemon.json") && !h.getApiFilename().equals("pokemon_stats.json") && !h.getApiFilename().equals("pokemon_types.json") && !h.getApiFilename().equals("pokemon_generations.json") && !h.getApiFilename().equals("shadow_pokemon.json") && !h.getApiFilename().equals("shiny_pokemon.json") );
         return hashlist;
     }
 
